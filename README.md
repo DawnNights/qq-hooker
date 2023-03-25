@@ -2,13 +2,13 @@
 
 第一次接触 hook，对 Windows QQ 进程的简单 inline hook 项目，编译器为 TDM-GCC 10.3.0
 
-PS: 运行此代码请注意更改 `main.c` 里的 `myhook.dll` 文件路径和 `myhook.c` 里的 `hook.log` 文件路径
+PS: 运行此代码请注意更改 `main.c` 里的 **myhook.dll 文件路径** 和 `myhook.c` 里的 **hook.log 文件路径**
 
 #### Dll 注入原理(main.c -> DLLRejection)
 
 1. 遍历系统快照得到 QQ 进程的 PID，再获取进程操作句柄
 2. 获取 Kernel32.dll 里的 LoadLibraryA 函数地址，该链接库在 Windows 所有进程中地址均一样
-3. 创建一个线程在 QQ 进程中运行，线程运行函数为 LoadLibraryA（因为所有进程中该函数地址相同，所有我们程序和QQ进程中该函数的地址亦是相同），函数参数为 `myhook,c`编译出的 32 为 dll 文件的路径
+3. 创建一个线程在 QQ 进程中运行，线程运行函数为 LoadLibraryA（因为所有进程中该函数地址相同，所有我们程序和QQ进程中该函数的地址亦是相同），函数参数为 `myhook.c`编译出的 32 位 dll 文件的路径
 
 #### InLine Hook 原理(myhook.c -> DllMain)
 
